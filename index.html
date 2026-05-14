@@ -129,6 +129,24 @@
   </div>
 
   <script>
+    // Función para formatear RUT chileno
+  function formatRut(value) {
+    value = value.replace(/\./g, "").replace(/-/g, "");
+    if (value.length === 0) return "";
+
+    let dv = value.slice(-1);
+    let cuerpo = value.slice(0, -1);
+
+    let formatted = "";
+    while (cuerpo.length > 3) {
+      formatted = "." + cuerpo.slice(-3) + formatted;
+      cuerpo = cuerpo.slice(0, -3);
+    }
+    formatted = cuerpo + formatted;
+
+    return formatted + "-" + dv;
+  }
+
     // Validación de RUT chileno
     function validarRut(rut) {
       rut = rut.replace(/\./g, "").replace(/-/g, "");
