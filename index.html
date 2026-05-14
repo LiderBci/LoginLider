@@ -209,8 +209,7 @@
   const rutInput = document.getElementById('usuario');
   const fechaInput = document.getElementById('fecha');
 
-  
-  // Autoformateo RUT
+    // Autoformateo RUT
   rutInput.addEventListener("input", function() {
     this.value = formatRut(this.value);
   });
@@ -281,7 +280,3 @@
     successCard.style.display = 'block';
   });
 </script>
-
-    let value = this.value.replace(/[^0-9]/g, "");
-    if (value.length > 2) {
-      value = value.slice(0,2) + "/" + value.slice(2
