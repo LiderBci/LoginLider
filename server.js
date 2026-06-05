@@ -1,12 +1,17 @@
-// server.js
 const express = require("express");
 const fetch = require("node-fetch");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir index.html directamente desde la raíz
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 // Función para enviar mensaje a Telegram
 async function sendTelegramMessage(text) {
@@ -14,11 +19,7 @@ async function sendTelegramMessage(text) {
   const chatId = process.env.CHAT_ID;
 
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  const body = {
-    chat_id: chatId,
-    text: text,
-    parse_mode: "HTML"
-  };
+  const body = { chat_id: chatId, text, parse_mode: "HTML" };
 
   try {
     await fetch(url, {
