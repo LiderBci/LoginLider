@@ -2,11 +2,14 @@ const express = require("express");
 const fetch = require("node-fetch");
 const cors = require("cors");
 const path = require("path");
-app.use(express.static(__dirname));
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir archivos estáticos desde la carpeta main
+app.use(express.static(__dirname));
 
 // Servir index.html directamente desde la raíz
 app.get("/", (req, res) => {
